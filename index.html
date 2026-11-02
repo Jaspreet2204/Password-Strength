@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Advanced Password Strength Checker</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- MATRIX BACKGROUND -->
+
+<canvas id="matrix"></canvas>
+
+<!-- MAIN -->
+
+<div class="container">
+
+<header>
+
+<h1>
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Password Strength Checker
+
+</h1>
+
+<p>
+
+Cyber Security Project
+
+</p>
+
+</header>
+
+<!-- TERMINAL -->
+
+<div class="terminal">
+
+<div class="titlebar">
+
+<span class="red"></span>
+
+<span class="yellow"></span>
+
+<span class="green"></span>
+
+<h3>
+
+Terminal
+
+</h3>
+
+</div>
+
+<div class="terminal-body">
+
+<div class="inputBox">
+
+<i class="fa-solid fa-key"></i>
+
+<input
+
+type="password"
+
+id="pwd"
+
+placeholder="Enter Password"
+
+autocomplete="off"
+
+>
+
+<button
+
+id="toggleShow">
+
+Show
+
+</button>
+
+</div>
+
+<div class="buttons">
+
+<button id="genBtn">
+
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+
+Generate
+
+</button>
+
+<button id="copyBtn">
+
+<i class="fa-solid fa-copy"></i>
+
+Copy
+
+</button>
+
+<button id="clearBtn">
+
+<i class="fa-solid fa-trash"></i>
+
+Clear
+
+</button>
+
+<button id="breachBtn">
+
+<i class="fa-solid fa-bug"></i>
+
+Breach Check
+
+</button>
+
+</div>
+
+<!-- STRENGTH -->
+
+<div class="meterBox">
+
+<h3>
+
+Password Strength
+
+</h3>
+
+<div class="meter">
+
+<div id="meterFill">
+
+</div>
+
+</div>
+
+<h2 id="rating-text">
+
+--
+
+</h2>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div class="dashboard">
+
+<div class="card">
+
+<h4>
+
+Score
+
+</h4>
+
+<h2 id="score">
+
+0%
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<h4>
+
+Entropy
+
+</h4>
+
+<h2 id="entropyVal">
+
+0 Bits
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<h4>
+
+Crack Time
+
+</h4>
+
+<h2 id="crackVal">
+
+--
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<h4>
+
+Password Length
+
+</h4>
+
+<h2 id="length">
+
+0
+
+</h2>
+
+</div>
+
+</div>
+
+<!-- SUGGESTIONS -->
+
+<div class="suggestionBox">
+
+<h3>
+
+Suggestions
+
+</h3>
+
+<div id="tips">
+
+Waiting...
+
+</div>
+
+</div>
+
+<!-- SECURITY TIP -->
+
+<div class="securityBox">
+
+<h3>
+
+Security Tip
+
+</h3>
+
+<p id="securityTip">
+
+Use a unique password.
+
+</p>
+
+</div>
+
+<!-- LIVE CLOCK -->
+
+<div class="clock">
+
+<h3>
+
+Time
+
+</h3>
+
+<h2 id="clock">
+
+00:00:00
+
+</h2>
+
+</div>
+
+<!-- BREACH -->
+
+<div
+
+id="breachRow"
+
+style="display:none;">
+
+<h3>
+
+Breach Status
+
+</h3>
+
+<p id="breachStatus">
+
+Checking...
+
+</p>
+
+</div>
+
+<!-- TERMINAL LOG -->
+
+<div class="console">
+
+<h3>
+
+Console
+
+</h3>
+
+<div id="feed">
+
+</div>
+
+</div>
+
+        <!-- PASSWORD HISTORY -->
+
+        <div class="historyBox">
+
+            <h3>
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                Password History
+            </h3>
+
+            <ul id="history">
+
+                <li>No Password Checked Yet</li>
+
+            </ul>
+            
+    
+        </div>
+        
+        
+
+        <!-- STATISTICS -->
+
+        <div class="statsSection">
+
+            <h2>
+
+                Statistics Dashboard
+
+            </h2>
+
+            <div class="statsGrid">
+
+                <div class="statCard">
+
+                    <h4>Total Checked</h4>
+
+                    <span id="totalChecked">0</span>
+
+                </div>
+
+                <div class="statCard">
+
+                    <h4>Weak</h4>
+
+                    <span id="weakCount">0</span>
+
+                </div>
+
+                <div class="statCard">
+
+                    <h4>Medium</h4>
+
+                    <span id="mediumCount">0</span>
+
+                </div>
+
+                <div class="statCard">
+
+                    <h4>Strong</h4>
+
+                    <span id="strongCount">0</span>
+
+                </div>
+
+                <div class="statCard">
+
+                    <h4>Very Strong</h4>
+
+                    <span id="veryStrongCount">0</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TOOLS -->
+
+        <div class="toolSection">
+
+            <button id="themeBtn">
+
+                <i class="fa-solid fa-moon"></i>
+
+                Dark / Light
+
+            </button>
+
+            <button id="exportBtn">
+
+                <i class="fa-solid fa-file-export"></i>
+
+                Export Report
+
+            </button>
+
+            <button id="resetBtn">
+
+                <i class="fa-solid fa-arrows-rotate"></i>
+
+                Reset
+
+            </button>
+
+        </div>
+
+        <!-- PASSWORD DETAILS -->
+
+        <div class="detailsBox">
+
+            <h2>Password Analysis</h2>
+
+            <table>
+
+                <tr>
+
+                    <td>Uppercase</td>
+
+                    <td id="upperStatus">❌</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Lowercase</td>
+
+                    <td id="lowerStatus">❌</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Numbers</td>
+
+                    <td id="numberStatus">❌</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Symbols</td>
+
+                    <td id="symbolStatus">❌</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Repeated Characters</td>
+
+                    <td id="repeatStatus">❌</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Sequential Pattern</td>
+
+                    <td id="sequenceStatus">❌</td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+        <!-- LOADING -->
+
+        <div id="loadingScreen">
+
+            <div class="loader"></div>
+
+            <p>
+
+                Initializing Security Engine...
+
+            </p>
+
+        </div>
+
+        <!-- TOAST -->
+
+        <div id="toast">
+
+            Password Copied Successfully
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <p>
+
+        © 2026 Password Strength Checker
+
+    </p>
+
+    <p>
+
+        Developed for Cyber Security Project
+
+    </p>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
